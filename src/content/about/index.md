@@ -1,5 +1,5 @@
 ---
-title: "I’m John Doe, A content writer based in LDN, Currently at Bookworm"
+title: "I’m Hashan Hemachandra, A technical writer based in Sri Lanka."
 meta_title: "About"
 image: "/images/author.png"
 draft: false
@@ -7,17 +7,17 @@ draft: false
 what_i_do:
   title: "What I Do"
   items:
-  - title: "Content Writing"
-    description: "Purus eget ipsum elementum venenatis, quis rutrum mi semper nonpurus eget ipsum elementum venenatis."
+  - title: "Technical Writing"
+    description: "I enjoy writing Tech Blogs about what I learn day to day life, so that it can make someone's life easier."
   
-  - title: "Photography"
-    description: "Aenean maximus urna magna elementum, quis rutrum mi semper non purus eget ipsum venenatis."
+  - title: "Videography"
+    description: "Videography is my meditation; I love capturing videos of nature and colorizing them."
   
-  - title: "Web Research"
-    description: "Aenean maximus urna magna elementum venenatis, quis semper non purus eget ipsum venenatis."
+  - title: "Coding"
+    description: "It is my daily digest. I like to explore and learn new techonologies and deep dive through it"
 
 ---
 
-A content writer with over 12 years experience working across brand identity, publishing and digital products. Maecenas sit amet purus eget ipsum elementum venenatis. Aenean maximus urna magna elementum venenatis quis non purus.
+A technical writer with over 4 years experience working as a software engineer, with extensive experience in full-stack development and web services.
 
-Purus eget ipsum elementum venenatis. Aenean maximus urna magna elementum venenatis, quis rutrum mi semper non purus eget ipsum elementum venenatis, aenean maximus urna magna elementum.
+I am proficient in JavaScript based libraries and frameworks. I am most expereinced with React and Next js.
