@@ -1,22 +1,315 @@
 ---
-title: "Why a balloon is a flexible bag that can be inflated with a gas"
+title: "Mastering Refs in React: Practical Guide with useRef and forwardRef"
 description: "meta description"
-date: 2022-04-04T16:56:47+06:00
-image: "/images/posts/04.jpg"
+date: 2024-03-18T16:56:47+06:00
+image: "/images/posts/04.png"
 draft: false
 authors: ["Hashan Hemachandra"]
 tags: ["Balloon", "Gas"]
 categories: ["Accessories"]
 ---
 
-A balloon is a flexible bag that can be inflated with a gas, such as helium, hydrogen, nitrous oxide, oxygen, and air. For special tasks, balloons can be filled with smoke, liquid water, granular media, or light sources.
+Hi everyone 🖖, hope you are doing well.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
+Welcome to an in-depth tutorial where we explore the practical use of React’s `useRef` and `forwardRef`. By the end of this post, you'll understand how to effectively use these hooks to control and manipulate DOM elements and component instances in a React application.
 
-### Creative Design
+### Introduction
 
-Nam ut rutrum ex, venenatis sollicitudin urna. Aliquam erat volutpat. Integer eu ipsum sem. Ut bibendum lacus vestibulum maximus suscipit. Quisque vitae nibh iaculis neque blandit euismod.
+In React, managing focus, reading or manipulating the DOM directly is generally not recommended as it goes against the core principles of React’s declarative nature. However, there are scenarios where direct DOM manipulation becomes necessary, such as managing focus, measuring the size of an element, or integrating with third-party DOM libraries. In such cases, React provides us with `useRef` and `forwardRef`.
 
-> Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
+Let’s dive into a practical example to understand how to use `useRef` and `forwardRef` in a Next.js project that displays emojis and their meanings. We'll be building a feature where clicking an emoji scrolls the corresponding meaning into view.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo vel ad consectetur ut aperiam. Itaque eligendi natus aperiam? Excepturi repellendus consequatur quibusdam optio expedita praesentium est adipisci dolorem ut eius!
+### Project Structure
+
+Our Next.js project is structured as follows:
+
+```lua
+use-ref-hook/
+├── .next/
+├── app/
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   ├── page.tsx
+├── components/
+│   ├── EmojiRow.tsx
+│   ├── EmojiTitle.tsx
+│   ├── MeaningCard.tsx
+│   ├── MeaningList.tsx
+├── constants/
+│   ├── emojiData.tsx
+│   ├── meaningData.tsx
+├── node_modules/
+├── public/
+├── types/
+│   ├── types.ts
+├── .eslintrc.json
+├── .gitignore
+├── next-env.d.ts
+├── next.config.mjs
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── README.md
+├── tailwind.config.ts
+├── tsconfig.json
+```
+
+- app: Contains our main page page.tsx.
+
+- components: Houses our React components including EmojiRow, EmojiTile, MeaningCard, and MeaningList.
+
+- constants: Stores our data files emojiData.tsx and meaningData.tsx.
+
+- types: Contains type definitions used in our project.
+
+![image](/images/ref-and-useref/1.png)
+
+First Let’s look at our constants.
+
+#### emojiData.tsx
+
+```tsx
+import { EmojiDataType } from "@/types/types";
+
+export const EMOJI_DATA: EmojiDataType[] = [
+  {
+    icon: "🖖",
+    name: "Prosper",
+  },
+  {
+    icon: "🤞",
+    name: "Luck",
+  },
+  {
+    icon: "👌",
+    name: "Perfect",
+  },
+  {
+    icon: "🤟",
+    name: "Love",
+  },
+  {
+    icon: "🙏",
+    name: "Pray",
+  },
+];
+```
+
+#### meaningData.tsx
+
+```tsx
+import { MeaningDataType } from "@/types/types";
+
+export const MEANING_DATA: MeaningDataType[] = [
+  {
+    name: "Prosper",
+    description: "Live Long and Prosper",
+  },
+  {
+    name: "Luck",
+    description: "Fingers crossed, I wish you Good Luck!",
+  },
+  {
+    name: "Perfect",
+    description: "This is Perfect!",
+  },
+  {
+    name: "Love",
+    description: "I Love You 💕",
+  },
+  {
+    name: "Pray",
+    description: "God will always be with you",
+  },
+];
+```
+
+My plan is to when I click on Emoji Tile named **Propser** I am going to reference the Meaning Card inside the Meaning List.
+
+![image](/images/ref-and-useref/2.png)
+
+### Using ‘useRef’ in ‘page.tsx’
+
+In our `page.tsx`, we utilize `useRef` to create references for different emoji meanings:
+
+```tsx
+import { useRef } from "react";
+const Home = () => {
+  const meaningRefs = {
+    Prosper: useRef(null),
+    Luck: useRef(null),
+    Perfect: useRef(null),
+    Love: useRef(null),
+    Pray: useRef(null),
+  };
+};
+```
+
+##### Full code
+
+```tsx
+"use client";
+
+import EmojiRow from "@/components/EmojiRow";
+import MeaningList from "@/components/MeaningList";
+import { useRef } from "react";
+const Home = () => {
+  const meaningRefs = {
+    Prosper: useRef(null),
+    Luck: useRef(null),
+    Perfect: useRef(null),
+    Love: useRef(null),
+    Pray: useRef(null),
+  };
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center gap-10">
+      <h1 className="text-3xl font-medium">Mastering Refs in React 🧐</h1>
+      <div className="flex gap-7">
+        <EmojiRow meaningRefs={meaningRefs} />
+      </div>
+      <div className="flex flex-col gap-7 w-[500px] max-h-[calc(100vh-910px)] overflow-y-auto shadow-inner">
+        <MeaningList meaningRefs={meaningRefs} />
+      </div>
+    </div>
+  );
+};
+
+export default Home;
+```
+
+Here, `useRef` is used to create an object `meaningRefs` where each property is a ref corresponding to a particular meaning. `useRef` returns a mutable ref object whose `.current` property is initialized to the passed argument (null in this case). The object persists for the full lifetime of the component.
+
+We create a dictionary of meaning references using the useRef hook. Then insert the whole object into props. To choose which key-value pair to use from the meaningRefs object passed as a prop, we would typically access the pair by its key. The key is a string that identifies the particular meaning ref we want to use.
+
+#### The ‘EmojiTile’ Component
+
+The `EmojiTile` component represents an individual emoji that users can interact with. When clicked, it triggers a scroll action that brings the corresponding meaning into view. Here's how we implement the `EmojiTile`:
+
+```tsx
+"use client";
+
+import { EmojiDataType } from "@/types/types";
+
+interface EmojiTileProps {
+  emoji: EmojiDataType;
+  onClick: () => void;
+}
+
+const EmojiTile = ({ emoji, onClick }: EmojiTileProps) => {
+  return (
+    <div
+      className="w-20 h-20 shadow flex items-center justify-center rounded-md bg-black/5 hover:bg-black/10 cursor-pointer"
+      onClick={onClick}
+    >
+      {emoji.icon}
+    </div>
+  );
+};
+
+export default EmojiTile;
+```
+
+#### Implementing Scroll Behavior in ‘EmojiRow’
+
+In our `EmojiRow` component, we handle the click event on each emoji. When an emoji is clicked, we want to scroll the corresponding meaning into view:
+
+```tsx
+"use client";
+
+import { EMOJI_DATA } from "@/constants/emojiData";
+import EmojiTile from "./EmojiTile";
+
+type MeaningRefs = {
+  [key: string]: React.RefObject<HTMLDivElement>;
+};
+
+const EmojiRow = ({ meaningRefs }: { meaningRefs: MeaningRefs }) => {
+  return EMOJI_DATA.map((emoji, index) => (
+    <div key={emoji.name} className="">
+      <EmojiTile
+        emoji={emoji}
+        onClick={() =>
+          meaningRefs[emoji.name].current?.scrollIntoView({
+            behavior: "smooth",
+          })
+        }
+      />
+    </div>
+  ));
+};
+
+export default EmojiRow;
+```
+
+#### The ‘MeaningList’ Component
+
+The `MeaningList` component is responsible for displaying the list of meanings. Each meaning is wrapped in a `div` that is linked to a specific ref, enabling the scroll-into-view functionality when an emoji is clicked:
+
+```tsx
+"use client";
+
+import { MEANING_DATA } from "@/constants/meaningData";
+import MeaningCard from "./MeaningCard";
+
+type MeaningRefs = {
+  [key: string]: React.RefObject<HTMLDivElement>;
+};
+
+
+const MeaningList = ({ meaningRefs }: { meaningRefs: MeaningRefs }) => {
+  return MEANING_DATA.map((meaning) => (
+    <div key={meaning.name} ref={meaningRefs[meaning.name]} >
+      <MeaningCard meaning={meaning} />
+    </div>
+  ));
+};
+
+export default MeaningList;
+```
+
+This component maps over the `MEANING_DATA` array, creating a list where each item is a `MeaningCard`. By assigning the `ref` from `meaningRefs` to the wrapping `div`, we establish a connection between the emojis and their meanings. When an emoji is clicked, the application scrolls to the corresponding `div` in this list.
+
+#### Forwarding Refs with ‘forwardRef’ in ‘MeaningCard’
+
+In some cases, you might need a child component to expose its DOM node to a parent component. Here’s where `forwardRef` comes into play. In our `MeaningCard` component, we wrap the component with forwardRef to `forward` a ref from its parent:
+
+```tsx
+"use client";
+
+import { MeaningDataType } from "@/types/types";
+import { forwardRef, LegacyRef } from "react";
+
+interface MeaningCardProps {
+  meaning: MeaningDataType;
+}
+
+const MeaningCard = forwardRef(
+  ({ meaning }: MeaningCardProps, ref: LegacyRef<HTMLDivElement> | null) => {
+    return (
+      <div
+        className="h-20 bg-black/5 flex items-center justify-center rounded-md shadow"
+        ref={ref}
+      >
+        {meaning.description}
+      </div>
+    );
+  }
+);
+
+MeaningCard.displayName = "MeaningCard";
+
+export default MeaningCard;
+```
+
+By using `forwardRef`, `MeaningCard` can now receive a `ref` that it attaches to its root element. This allows the parent component to directly reference the DOM node.
+
+#### Expected Behaviour
+
+![image](/images/ref-and-useref/3.gif)
+
+I hope now you got an idea about how to use `useRef` to create references to DOM nodes and how to use `forwardRef` to allow child components to expose their DOM nodes to parent components. This pattern is particularly useful in scenarios where you need to directly interact with the DOM, such as controlling focus or scrolling elements into view.
+
+Let’s meet with another practical example in React. Until then, have a good one! Peace ✌️
+
