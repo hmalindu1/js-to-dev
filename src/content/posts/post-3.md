@@ -4,7 +4,7 @@ description: "meta description"
 date: 2022-04-03T06:00:00+00:00
 image: "/images/posts/03.jpg"
 categories: ["art"]
-authors: ["Mark Dinn"]
+authors: ["Hashan Hemachandra"]
 tags: ["diy", "toy"]
 draft: false
 ---

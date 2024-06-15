@@ -4,7 +4,7 @@ description: "meta description"
 date: 2022-08-29T05:00:00Z
 image: "/images/posts/01.png"
 categories: ["art"]
-authors: ["Mark Dinn"]
+authors: ["Hashan Hemachandra"]
 tags: ["diy", "toy"]
 draft: false
 ---
@@ -120,3 +120,71 @@ eslint@9.x, globals, @eslint/js
 ```
 
 Install them as your preference. Then you'll get the `eslint.config.mjs` file.
+
+```js
+import globals from "globals";
+import pluginJs from "@eslint/js";
+
+export default [
+  { languageOptions: { globals: globals.browser } },
+  pluginJs.configs.recommended,
+];
+```
+Then I will add some configuration to the file as for my preference.
+
+```js
+import globals from "globals";
+import pluginJs from "@eslint/js";
+
+export default [
+  {
+    files: ["**/*.js"], // Adjust the file pattern if necessary
+    ignores: ["**/*.config.js"], // Ignore config files
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: "latest", // ECMAScript version
+        sourceType: "module", // Using ECMAScript modules
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node, // Include Node.js globals
+        console: "readonly", // Explicitly define console as a global variable
+      },
+    },
+    rules: {
+      // Your custom rules here
+      // For example:
+      "no-console": "warn", // Warn about console statements
+      eqeqeq: "error", // Enforce strict equality
+      curly: "error", // Require following curly brace conventions
+      "no-var": "warn", // Disallow using var
+      "no-unused-vars": "warn", // Warn about unused variables
+    },
+  },
+  pluginJs.configs.recommended,
+];
+```
+
+- To know about [**configuration**]("https://eslint.org/docs/latest/use/configure/configuration-files#configuration-objects").
+- For more [**rules**]("https://eslint.org/docs/latest/rules")
+
+Then install the VSCode extension for **ESLint** provided by **Microsoft**
+
+Then go to you `server.js` file. You will see a warning for the console. Wich means now ESLint is in effect for your project. Also run the
+
+```shell
+npx eslint
+```
+
+in your terminal. It will show the warning detail for the `server.js` file.
+
+```shell
+PS F:\jstodev\blog\nodejs-eslint> npx eslint
+
+F:\jstodev\blog\nodejs-eslint\server.js
+  15:3  warning  Unexpected console statement  no-console
+
+✖ 1 problem (0 errors, 1 warning)
+```
+
+This way you can configure your eslint preferences with your project.
