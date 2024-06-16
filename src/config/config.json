@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "JStoDev.com",
-    "base_url": "jstodev.com",
+    "base_url": "",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
@@ -18,7 +18,7 @@
 
   "metadata": {
     "meta_author": "JStoDev",
-    "meta_image": "/images/logo.png",
+    "meta_image": "/images/og-image.png",
     "meta_description": "Explore practical tutorials and guides on web development, focusing on JavaScript libraries and frameworks. Enhance your skills with step-by-step examples and best practices for creating dynamic and engaging web applications."
   },
 
