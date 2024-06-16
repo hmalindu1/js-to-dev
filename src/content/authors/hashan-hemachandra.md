@@ -1,11 +1,10 @@
 ---
 title: Hashan Hemachandra
 image: /images/authors/hashan-hemachandra.png
-description: this is meta description
+description: Hashan Hemachandra is a skilled Software Engineer from Sri Lanka, he is proficient in a wide range of technologies based on Javascript and Amazon Web Services.
 social:
-  facebook: https://www.facebook.com/
-  twitter: https://www.twitter.com/
-  instagram: https://www.instagram.com/
+  linkedin: https://www.facebook.com/
+  github: https://www.twitter.com/
 ---
 
-lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostr navigation et dolore magna aliqua.
+Software Engineer based in Sri Lanka having experience with JavaScript

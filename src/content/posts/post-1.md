@@ -1,11 +1,11 @@
 ---
 title: "Configure ESLint to your Node.js Express Project"
-description: "meta description"
+description: "Learn how to configure ESLint in your Node.js Express project to maintain consistent coding standards and improve code quality. This guide walks you through the installation and setup process using npm and VSCode."
 date: 2022-08-29T05:00:00Z
 image: "/images/posts/01.png"
-categories: ["art"]
+categories: ["back end"]
 authors: ["Hashan Hemachandra"]
-tags: ["diy", "toy"]
+tags: ["eslint", "node.js", "express", "JavaScript"]
 draft: false
 ---
 

@@ -1,11 +1,11 @@
 ---
 title: Understanding the Power of React Context API through a Practical Example
-description: "meta description"
+description: "Learn how to effectively manage state in React using the Context API through a practical example. This guide demonstrates creating a text input application with Next.js, showcasing the benefits of avoiding prop-drilling and simplifying state management across components."
 date: 2024-03-10T06:00:00+00:00
 image: "/images/posts/03.png"
-categories: ["art"]
+categories: ["front end"]
 authors: ["Hashan Hemachandra"]
-tags: ["diy", "toy"]
+tags: ["react", "NextJs", "javascript", "tailwind", "hooks"]
 draft: false
 ---
 
