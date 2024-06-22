@@ -3,7 +3,7 @@
     "title": "JStoDev.com",
     "base_url": "https://jstodev.com",
     "base_path": "/",
-    "trailing_slash": false,
+    "trailing_slash": true,
     "favicon": "/images/favicon.png",
     "logo": "/images/logo.png",
     "logo_width": "200",
