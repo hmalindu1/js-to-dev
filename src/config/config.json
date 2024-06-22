@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "JStoDev.com",
-    "base_url": "https://jstodev.com",
+    "title": "JStoDev",
+    "base_url": "https://www.jstodev.com",
     "base_path": "/",
     "trailing_slash": true,
     "favicon": "/images/favicon.png",
