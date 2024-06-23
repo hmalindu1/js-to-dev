@@ -36,6 +36,11 @@ export default defineConfig({
       ],
     }),
     mdx(),
+    partytown({
+      config: {
+        forward: ["dataLayer.push"],
+      },
+    }),
   ],
   markdown: {
     remarkPlugins: [
