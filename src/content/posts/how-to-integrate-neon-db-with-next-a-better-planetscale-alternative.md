@@ -2,7 +2,7 @@
 title: "How to integrate Neon DB with Next js: A better Planetscale alternative"
 description: "Discover why Neon DB is the best alternative to Planetscale after its free-tier removal, offering serverless PostgreSQL, powerful features, and seamless integration with Next.js and Prisma."
 date: 2024-09-20T05:00:00Z
-image: "/images/posts/01.png"
+image: "/images/posts/07.png"
 categories: ["back end"]
 authors: ["Hashan Hemachandra"]
 tags: ["Neon DB", "Nextjs", "Prisma", "PostgreSQL"]
