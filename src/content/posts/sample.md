@@ -10,3 +10,7 @@ draft: false
 ---
 
 You may have heard **Execution Context** many time in your JavaScript journey while you are learning new things. Also It's one of the most popular interview question so you would get almost every JavaScript Engineer interview you'd face. Today let's deep dive into matter of execution context
+
+#### What is Execution Context ####
+
+It is the environment in which a code get executed. It contains many internal components that the **JavaScript Engine** uses to keep track of execution flow of any piece of code.  
