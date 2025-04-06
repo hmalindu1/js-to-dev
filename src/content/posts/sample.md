@@ -59,7 +59,7 @@ iii. User defined properties.</br>
 
 ###### i. Specification Defined Properties
 
-All the JavaScript built in Functions and Objects like **Array**, **Function**, **Error**. Basically this exposes the **_Intrinsics_**
+All the JavaScript built in Functions and Objects like **Array**, **Function**, **Error**. Basically this is the **_Intrinsics_**
 
 ###### ii. Host Defined Properties
 
@@ -70,6 +70,21 @@ All the browser related APIs like **fetch**, **setTimeout**, **Document**, **loc
 As developers we can add properties to the global object whenever we declare a **function** on the global scope or whenever we declare a variable using **var** keyword on global scope. These are also added to the global object and now available to use throughout the entire script.
 
 ##### 3. Global Environment Record
+
+Environment records manage the identifier bindings within it's scope. Let's break this down. 
+
+###### What is an identfire ?
+
+Identifier is the variable name you assign to a variable.
+
+###### What is identifier binding ?
+
+It means a creating connection between the variable name and the actual data it represents.
+
+
+
+
+
 
 Every execution context goes through **two phases**.
 
