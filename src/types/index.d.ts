@@ -1,6 +1,5 @@
 export interface TAuthor {
   id: string;
-  slug: string;
   body: string;
   collection: string;
   data: {
@@ -13,12 +12,10 @@ export interface TAuthor {
       instagram: string;
     }
   };
-  render: () => Promise<{ Content: any }>;
 }
 
 export interface TPost {
   id: string;
-  slug: string;
   body: string;
   collection: string;
   data: {
@@ -31,5 +28,4 @@ export interface TPost {
     tags: string[];
     draft: boolean;
   };
-  render: () => Promise<{ Content: any }>;
 }

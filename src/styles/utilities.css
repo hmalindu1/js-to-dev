@@ -1,0 +1,21 @@
+b,
+strong {
+  @apply font-semibold;
+}
+
+img {
+  @apply inline-block;
+}
+
+/*
+  form style — lives in the utilities layer so it overrides the
+  @tailwindcss/forms `.form-input` classes (utilities in Tailwind v4)
+*/
+.form-input,
+.form-textarea {
+  @apply rounded-md border-border py-3 text-text focus:border-primary focus:ring-transparent;
+}
+
+.search-modal .form-input {
+  @apply h-full w-full border-0 text-lg;
+}

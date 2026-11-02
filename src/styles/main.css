@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* theme (colors, fonts, sizes) and plugins live in tailwind.config.js, driven by src/config/theme.json */
+@config "../../tailwind.config.js";
+
+/*
+  Tailwind v4 compatibility: v3 defaulted borders to gray-200 and gave
+  buttons a pointer cursor. Keep that so existing markup looks the same.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@import "./base.css" layer(base);
+@import "./components.css" layer(components);
+@import "./navigation.css" layer(components);
+@import "./buttons.css" layer(components);
+@import "./utilities.css" layer(utilities);
+
+/* site container: centered, 1000px max (extends Tailwind's container utility) */
+@utility container {
+  margin-inline: auto;
+  max-width: 1000px;
+  padding-inline: 1rem;
+  @variant md {
+    padding-inline: 2rem;
+  }
+}
+
+/* site-wide soft shadow (overrides Tailwind's default `shadow`) */
+@utility shadow {
+  box-shadow: 0 10px 30px rgb(22 28 45 / 10%);
+}

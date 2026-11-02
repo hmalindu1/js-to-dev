@@ -5,9 +5,9 @@ import theme from "@/config/theme.json";
 import { plainify } from "@/lib/utils/textConverter";
 import Footer from "@/partials/Footer.astro";
 import Header from "@/partials/Header.astro";
-import "@/styles/main.scss";
+import "@/styles/main.css";
 import { AstroFont } from "astro-font";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 // font families
 const pf = theme.fonts.font_family.primary;
@@ -38,6 +38,10 @@ export interface Props {
 // distructure frontmatters
 const { title, meta_title, description, image, noindex, canonical } =
   Astro.props;
+
+// analytics IDs (set in AWS Amplify → Environment variables)
+const gaId = import.meta.env.PUBLIC_GA_ID;
+const clarityId = import.meta.env.PUBLIC_CLARITY_ID;
 ---
 
 <!doctype html>
@@ -61,17 +65,47 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta name="generator" content={Astro.generator} />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    
     <!-- Google tag (gtag.js) -->
-    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-D1GXYKEYDZ"></script>
-    <script type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    {
+      gaId && (
+        <>
+          <script
+            is:inline
+            type="text/partytown"
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+          <script is:inline type="text/partytown" define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          </script>
+        </>
+      )
+    }
 
-      gtag('config', 'G-D1GXYKEYDZ');
-    </script>
-
+    <!-- Microsoft Clarity -->
+    {
+      clarityId && (
+        <script is:inline define:vars={{ clarityId }}>
+          (function (c, l, a, r, i, t, y) {
+            c[a] =
+              c[a] ||
+              function () {
+                (c[a].q = c[a].q || []).push(arguments);
+              };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", clarityId);
+        </script>
+      )
+    }
 
     <!-- google font css -->
     <AstroFont
@@ -122,7 +156,27 @@ const { title, meta_title, description, image, noindex, canonical } =
       )}
     />
 
-    <ViewTransitions />
+    <ClientRouter />
+    <script>
+      // React 19 hoists <link rel="preconnect|preload"> rendered by islands
+      // (e.g. the Youtube shortcode) into <head>. Keep them through the
+      // ClientRouter head swap so React can still remove them on unmount.
+      let hoistedLinkId = 0;
+      document.addEventListener("astro:before-swap", (event) => {
+        const newHead = event.newDocument.head;
+        document.head
+          .querySelectorAll<HTMLLinkElement>(
+            'link[rel="preconnect"], link[rel="preload"]:not([as="font"])',
+          )
+          .forEach((link) => {
+            if (!link.dataset.astroTransitionPersist) {
+              link.dataset.astroTransitionPersist = `hoisted-link-${hoistedLinkId++}`;
+            }
+            // a matching placeholder tells the router to keep the original node
+            newHead.appendChild(link.cloneNode());
+          });
+      });
+    </script>
 
     <!-- author from config.json -->
     <meta name="author" content={config.metadata.meta_author} />

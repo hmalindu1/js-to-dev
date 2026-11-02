@@ -33,10 +33,6 @@ module.exports = {
       xl: "1280px",
       "2xl": "1536px",
     },
-    container: {
-      center: true,
-      padding: "2rem",
-    },
     extend: {
       colors: {
         text: theme.colors.default.text_color.default,
@@ -63,7 +59,10 @@ module.exports = {
       },
       fontFamily: {
         primary: [fontPrimary, fontPrimaryType],
-        secondary: [fontSecondary, fontSecondaryType],
+        // falls back to the primary font when no secondary font is set
+        secondary: fontSecondary
+          ? [fontSecondary, fontSecondaryType]
+          : [fontPrimary, fontPrimaryType],
       },
     },
   },
@@ -71,14 +70,14 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
     require("tailwind-bootstrap-grid")({
-      generateContainer: false,
-      gridGutters: {
-        1: "0.5rem",
-        2: "0.75rem",
-        3: "1.25rem",
-        4: "2rem",
-        5: "3.5rem",
-      },
+      generate_container: false,
+      grid_gutters: [
+        "1", "0.5rem",
+        "2", "0.75rem",
+        "3", "1.25rem",
+        "4", "2rem",
+        "5", "3.5rem",
+      ],
     }),
   ],
 };

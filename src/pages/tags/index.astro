@@ -12,7 +12,7 @@ const tags = await getTaxonomy("posts", "tags");
   <section class="section">
     <div class="container text-center">
       <h1 class="h2 page-heading">Tags</h1>
-      <ul class="space-x-4">
+      <ul class="[&>*+*]:ml-4">
         {
           tags.map((tag) => (
             <li class="inline-block">
