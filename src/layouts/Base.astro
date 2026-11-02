@@ -38,6 +38,10 @@ export interface Props {
 // distructure frontmatters
 const { title, meta_title, description, image, noindex, canonical } =
   Astro.props;
+
+// analytics IDs (set in AWS Amplify → Environment variables)
+const gaId = import.meta.env.PUBLIC_GA_ID;
+const clarityId = import.meta.env.PUBLIC_CLARITY_ID;
 ---
 
 <!doctype html>
@@ -61,17 +65,47 @@ const { title, meta_title, description, image, noindex, canonical } =
     <meta name="generator" content={Astro.generator} />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    
     <!-- Google tag (gtag.js) -->
-    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-D1GXYKEYDZ"></script>
-    <script type="text/partytown">
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    {
+      gaId && (
+        <>
+          <script
+            is:inline
+            type="text/partytown"
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          />
+          <script is:inline type="text/partytown" define:vars={{ gaId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId);
+          </script>
+        </>
+      )
+    }
 
-      gtag('config', 'G-D1GXYKEYDZ');
-    </script>
-
+    <!-- Microsoft Clarity -->
+    {
+      clarityId && (
+        <script is:inline define:vars={{ clarityId }}>
+          (function (c, l, a, r, i, t, y) {
+            c[a] =
+              c[a] ||
+              function () {
+                (c[a].q = c[a].q || []).push(arguments);
+              };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", clarityId);
+        </script>
+      )
+    }
 
     <!-- google font css -->
     <AstroFont
