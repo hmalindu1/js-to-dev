@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import { Image } from "astro:assets";
 import Share from "@/components/Share.astro";
 import SimilarPosts from "@/components/SimilarPosts.astro";
@@ -11,8 +12,8 @@ import { BiCalendarEdit, BiCategoryAlt } from "react-icons/bi";
 const allAuthors = await getSinglePage("authors");
 const posts = await getSinglePage("posts");
 const { post } = Astro.props;
-const similarPosts = similerItems(post, posts, post.slug);
-const { Content } = await post.render();
+const similarPosts = similerItems(post, posts, post.id);
+const { Content } = await render(post);
 const { title, description, authors, categories, image, date, tags } =
   post.data;
 ---
@@ -33,7 +34,7 @@ const { title, description, authors, categories, image, date, tags } =
                 )
                 .map((author, i) => (
                   <a
-                    href={`/authors/${slugify(author.slug)}/`}
+                    href={`/authors/${slugify(author.id)}/`}
                     class="flex items-center hover:text-primary font-medium"
                   >
                     {author.data.image && (
@@ -96,7 +97,7 @@ const { title, description, authors, categories, image, date, tags } =
           <Content />
         </div>
         <div class="flex flex-wrap items-center justify-between">
-          <ul class="mr-4 mb-4 space-x-3">
+          <ul class="mr-4 mb-4 [&>*+*]:ml-3">
             {
               tags.map((tag: string) => (
                 <li class="inline-block">
@@ -114,7 +115,7 @@ const { title, description, authors, categories, image, date, tags } =
             className="social-share mb-4"
             title={title}
             description={description}
-            slug={post.slug}
+            slug={post.id}
           />
         </div>
       </div>

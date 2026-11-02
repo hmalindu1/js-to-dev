@@ -2,10 +2,10 @@
 import { Image } from "astro:assets";
 import Base from "@/layouts/Base.astro";
 import { markdownify } from "@/lib/utils/textConverter";
-import { getEntryBySlug } from "astro:content";
+import { getEntry, render } from "astro:content";
 
-const entry = await getEntryBySlug("about", "index");
-const { Content } = await entry.render();
+const entry = (await getEntry("about", "index"))!;
+const { Content } = await render(entry);
 const { title, description, meta_title, image, what_i_do } = entry.data;
 ---
 
